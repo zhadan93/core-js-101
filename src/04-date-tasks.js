@@ -19,8 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return Date.parse(value);
 }
 
 /**
@@ -53,8 +53,16 @@ function parseDataFromIso8601(value) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  const year = date.getFullYear();
+
+  if (year % 400 === 0) return true;
+
+  if (year % 100 === 0) return false;
+
+  if (year % 4 === 0) return true;
+
+  return false;
 }
 
 
@@ -73,8 +81,14 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const date = new Date(endDate - startDate);
+  const time = [
+    `0${date.getUTCHours()}`,
+    `0${date.getUTCMinutes()}`,
+    `0${date.getUTCSeconds()}`,
+  ].map((component) => component.slice(-2)).join(':');
+  return `${time}.${`00${date.getUTCMilliseconds()}`.slice(-3)}`;
 }
 
 

@@ -27,8 +27,20 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  const input = ['Fizz', 'Buzz'];
+  const [fizz, buzz] = input;
+  let result = num;
+
+  if (num % 3 === 0 && num % 5 === 0) {
+    result = input.join('');
+  } else if (num % 3 === 0) {
+    result = fizz;
+  } else if (num % 5 === 0) {
+    result = buzz;
+  }
+
+  return result;
 }
 
 
@@ -43,8 +55,8 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  return n > 1 ? n * getFactorial(n - 1) : 1;
 }
 
 
@@ -60,8 +72,14 @@ function getFactorial(/* n */) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  let i = n1;
+  let sum = 0;
+  while (i <= n2) {
+    sum += i;
+    i += 1;
+  }
+  return sum;
 }
 
 
@@ -225,8 +243,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return `${num}`.split('').reverse().join('');
 }
 
 
@@ -294,8 +312,24 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const mas = [];
+  const brackets = {
+    '{': '}',
+    '[': ']',
+    '(': ')',
+    '<': '>',
+  };
+
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === brackets[mas[mas.length - 1]]) {
+      mas.pop();
+    } else {
+      mas.push(str[i]);
+    }
+  }
+
+  return mas.length === 0;
 }
 
 
