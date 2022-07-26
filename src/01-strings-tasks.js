@@ -202,8 +202,30 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let str = '';
+  for (let i = 0; i < height; i += 1) {
+    for (let j = 0; j < width; j += 1) {
+      if (!i && !j) {
+        str += '┌';
+      } else if (!i && j === width - 1) {
+        str += '┐\n';
+      } else if (i === height - 1 && !j) {
+        str += '└';
+      } else if (i === height - 1 && j === width - 1) {
+        str += '┘\n';
+      } else if ((!i || i === height - 1) && j && j !== width - 1) {
+        str += '─';
+      } else if (i && i !== height - 1 && j && j !== width - 1) {
+        str += ' ';
+      } else if (i && i !== height - 1 && !j) {
+        str += '│';
+      } else {
+        str += '│\n';
+      }
+    }
+  }
+  return str;
 }
 
 
@@ -223,8 +245,32 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const [latinCapitalStart, latinCapitalEnd,
+    latinLowercaseStart, latinLowercaseEnd] = [65, 90, 97, 122];
+  const cipherCount = 13;
+  const alphabetLength = 26;
+
+  return str.split('').map((item) => {
+    let codeLetter = 0;
+    const rot13CipherLetter = item.charCodeAt() + cipherCount;
+    const letter = item.charCodeAt();
+
+    if ((letter < latinCapitalStart || letter > latinLowercaseEnd)
+      || (letter > latinCapitalEnd && letter < latinLowercaseStart)) {
+      return item;
+    }
+
+    if ((letter >= latinCapitalStart
+      && rot13CipherLetter <= latinCapitalEnd) || (letter >= latinLowercaseStart
+      && rot13CipherLetter <= latinLowercaseEnd)) {
+      codeLetter = rot13CipherLetter;
+    } else {
+      codeLetter = rot13CipherLetter - alphabetLength;
+    }
+
+    return String.fromCharCode(codeLetter);
+  }).join('');
 }
 
 /**
